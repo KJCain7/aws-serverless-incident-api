@@ -1,0 +1,26 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "WriteIncidentsToSpecificTable",
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:PutItem"
+      ],
+      "Resource": "arn:aws:dynamodb:af-south-1:928705892574:table/IncidentReports"
+    },
+    {
+      "Sid": "WriteLambdaLogs",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": [
+       "arn:aws:logs:af-south-1:928705892574:log-group:/aws/lambda/IncidentReportsFunction",
+        "arn:aws:logs:af-south-1:928705892574:log-group:/aws/lambda/IncidentReportsFunction:*"
+      ]
+    }
+  ]
+}
