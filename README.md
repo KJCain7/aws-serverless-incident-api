@@ -194,9 +194,11 @@ Resource creation and deployment commands should be adapted to the target AWS ac
 - Temporary diagnostic logging of complete API Gateway events was removed to avoid logging sensitive request headers.
 - Local credentials, environment files, Python environments, and build artifacts are excluded from Git.
 
-The API Gateway invocation permission currently permits any stage, method, and route within the specified API at the Lambda resource-policy level. The routes independently require IAM authorization. Restricting the invocation source ARN further is a potential hardening improvement.
+API Gateway routes require AWS IAM authorization using Signature Version 4.
 
-DynamoDB encrypts table data at rest by default. The table's `SSEDescription` query returned `null`, so the output did not independently confirm its specific encryption configuration.
+**Lambda invocation restrictions:** The Lambda resource-based policy allows API Gateway to invoke the function only through the `prod` stage's `GET /health` and `POST /incidents` routes. The previous wildcard permission covering all stages, methods, and routes was removed after the route-specific permissions were added and tested.
+
+**DynamoDB encryption:** DynamoDB encrypts table data at rest by default. The `SSEDescription` query returned `null`, so that output did not independently confirm the table's specific encryption configuration.
 
 ## Testing and Verification Results
 
